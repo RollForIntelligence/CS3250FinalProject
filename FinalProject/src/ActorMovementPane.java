@@ -1,7 +1,10 @@
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextAlignment;
-
+/*
+ * This is meant to act as the layer for various actors, such as the player, enemies, and NPCs.
+ * In order to have a separate class keep track of the Player, this accepts a Player as input
+ */
 public class ActorMovementPane extends AnchorPane {
 	public ActorMovementPane(Player playerCharacter) {
 		// TODO: Replace with Image once we learn how to do so

@@ -2,7 +2,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-
+/*
+ * This class represents the box which spawns to display dialogue. 
+ * It will later be able to close.
+ */
 public class DialogueBox extends VBox {
 	public DialogueBox(String dialogueText) {
 		super(10);

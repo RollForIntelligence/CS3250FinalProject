@@ -1,6 +1,8 @@
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-
+/*
+ * This pane is meant to hold the player's UI, which currently displays a stand-in healthbar and a DialogueBox
+ */
 public class UIPane extends AnchorPane {
 	public UIPane() {
 		DialogueBox dialogueBox = new DialogueBox("Example dialogue");
