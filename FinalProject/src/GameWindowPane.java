@@ -5,7 +5,7 @@ import javafx.scene.layout.StackPane;
  */
 public class GameWindowPane extends StackPane {
 	public GameWindowPane() {
-		Region region = new Region();
+		Region region = new Region(500, 500);
 		getChildren().add(region);
 		
 		Player player = new Player();
