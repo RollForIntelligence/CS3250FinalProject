@@ -1,4 +1,3 @@
-import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
 /*
  * This pane is meant to hold the player's UI, which currently displays a stand-in healthbar and a DialogueBox

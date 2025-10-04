@@ -9,7 +9,7 @@ public class GameWindowPane extends StackPane {
 		getChildren().add(region);
 		
 		Player player = new Player();
-		ActorMovementPane actorPane = new ActorMovementPane(player);
+		ActorMovementPane actorPane = new ActorMovementPane(500, 500, player);
 		getChildren().add(actorPane);
 		
 		UIPane uiPane = new UIPane(500, 500, player);

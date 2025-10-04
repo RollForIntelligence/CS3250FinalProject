@@ -1,20 +1,13 @@
+import javafx.scene.image.Image;
 
 public class Player {
 	private String name;
-	private String sprite = " o \n-+-\n | \n ^ ";
+	private Image sprite;
 	private double xPos;
 	private double yPos;
 	private Inventory inventory;
 	private int maxHealth = 20;
 	private int currentHealth = 15;
-	
-	public String getSprite() {
-		return sprite;
-	}
-	
-	public void setSprite(String sprite) {
-		this.sprite = sprite;
-	}
 
 	public double getxPos() {
 		return xPos;
