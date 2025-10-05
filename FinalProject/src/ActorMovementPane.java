@@ -44,13 +44,13 @@ public class ActorMovementPane extends Canvas {
 					gc.setStroke(Color.TAN);
 					gc.setLineCap(StrokeLineCap.ROUND);
 					gc.setLineWidth(10);
-					if (frame == 0 || frame == 2) {
+					if (frame == 1 || frame == 3) {
 						gc.strokeLine(250, 240, 250, 270);
 					}
-					else if (frame == 1) {
+					else if (frame == 0) {
 						gc.strokeLine(250, 240, 268, 264);
 					}
-					else if (frame == 3) {
+					else if (frame == 2) {
 						gc.strokeLine(250, 240, 232, 264);
 					}
 					
@@ -66,46 +66,54 @@ public class ActorMovementPane extends Canvas {
 					
 					// Left leg and Shoe
 					gc.setStroke(Color.DARKBLUE);
+					gc.setFill(Color.BLACK);
 					if (frame == 0) {
-						gc.strokeLine(250, 275, 262, 289);
-						gc.strokeLine(262, 289, 274, 305);
+						gc.strokeLine(250, 275, 274, 307);
+						gc.fillPolygon(new double[] {277.5, 270.5, 276, 288}, new double[] {305, 310, 318, 308}, 4);
 					}
 					else if (frame == 1) {
-						
+						gc.strokeLine(250, 275, 250, 315);
+						gc.fillPolygon(new double[] {245, 245, 260, 255}, new double[] {310, 320, 320, 310}, 4);
 					}
 					else if (frame == 2) {
-						
+						gc.strokeLine(250, 275, 226, 307);
+						gc.fillPolygon(new double[] {229.5, 221, 215, 230}, new double[] {310, 305, 314, 320}, 4);
 					}
 					else if (frame == 3) {
-						
+						gc.strokeLine(250, 275, 250, 315);
+						gc.fillPolygon(new double[] {245, 245, 260, 255}, new double[] {310, 320, 320, 310}, 4);
 					}
 					
 					// Right leg and Shoe
 					gc.setStroke(Color.DARKBLUE);
 					if (frame == 0) {
-						
+						gc.strokeLine(250, 275, 226, 307);
+						gc.fillPolygon(new double[] {229.5, 221, 215, 230}, new double[] {310, 305, 314, 320}, 4);
 					}
 					else if (frame == 1) {
-						
+						gc.strokeLine(250, 275, 250, 315);
+						gc.fillPolygon(new double[] {245, 245, 260, 255}, new double[] {310, 320, 320, 310}, 4);
 					}
 					else if (frame == 2) {
-						
+						gc.strokeLine(250, 275, 274, 307);
+						gc.fillPolygon(new double[] {277.5, 270.5, 276, 288}, new double[] {305, 310, 318, 308}, 4);
 					}
 					else if (frame == 3) {
-						
+						gc.strokeLine(250, 275, 250, 315);
+						gc.fillPolygon(new double[] {245, 245, 260, 255}, new double[] {310, 320, 320, 310}, 4);
 					}
 					
 					// Right arm
 					gc.setStroke(Color.TAN);
 					gc.setLineCap(StrokeLineCap.ROUND);
 					gc.setLineWidth(10);
-					if (frame == 0 || frame == 2) {
+					if (frame == 1 || frame == 3) {
 						gc.strokeLine(250, 240, 250, 270);
 					}
-					else if (frame == 1) {
+					else if (frame == 0) {
 						gc.strokeLine(250, 240, 232, 264);
 					}
-					else if (frame == 3) {
+					else if (frame == 2) {
 						gc.strokeLine(250, 240, 268, 264);
 					}
 					
