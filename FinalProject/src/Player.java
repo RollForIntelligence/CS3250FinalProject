@@ -7,7 +7,13 @@ public class Player {
 	private double yPos;
 	private Inventory inventory;
 	private int maxHealth = 20;
-	private int currentHealth = 15;
+	private int currentHealth;
+	
+	public Player(String name) {
+		this.name = name;
+		this.inventory = new Inventory();
+		this.currentHealth = maxHealth;
+	}
 
 	public double getxPos() {
 		return xPos;
