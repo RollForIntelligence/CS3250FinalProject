@@ -24,6 +24,9 @@ public class NonPlayerCharacter extends Actor {
 		if (situationValue == 0) {
 			return "If I have 15 oranges in one hand and 36 oranges in the other, I have far too many oranges than is reasonable.";
 		}
+		if (situationValue == 1) {
+			return "You're too far away, I can't hear you!";
+		}
 		return "Placeholder Text as an example of Dialogue";
 	}
 }

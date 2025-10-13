@@ -11,10 +11,10 @@ public class PlayerHealthBar extends Canvas {
 		super(width, height);
 		this.player = player;
 		gc = this.getGraphicsContext2D();
-		displayHealth();
+		DisplayHealth();
 	}
 	
-	private void displayHealth() {
+	public void DisplayHealth() {
 		gc.clearRect(0, 0, getWidth(), getHeight());
 		
 		gc.setFill(Color.BLACK);

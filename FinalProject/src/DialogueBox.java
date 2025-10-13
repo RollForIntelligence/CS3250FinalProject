@@ -1,5 +1,4 @@
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 /*
@@ -12,15 +11,12 @@ public class DialogueBox extends VBox {
 		String displayText = DialogueScrambler.Scramble(dialogueText);
 		
 		Label dialogueLabel = new Label(displayText);
-		Button closeDialogueButton = new Button("Done");
+		dialogueLabel.setWrapText(true);
 		this.setAlignment(Pos.CENTER);
 		
-		closeDialogueButton.setOnAction(event -> {
-			this.closeDialogue();
-		});
-		
 		getChildren().add(dialogueLabel);
-		getChildren().add(closeDialogueButton);
+		
+		this.setStyle("background-color: white");
 	}
 	
 	public void closeDialogue() {
