@@ -12,6 +12,14 @@ public class Actor extends Canvas {
 	public double getxPos() {
 		return xPos;
 	}
+	
+	public double getCenterX() {
+		return this.getLayoutX() + this.getWidth() / 2;
+	}
+	
+	public double getCenterY() {
+		return this.getLayoutY() + this.getHeight() / 2;
+	}
 
 	public void setxPos(double xPos) {
 		this.xPos = xPos;

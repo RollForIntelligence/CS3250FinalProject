@@ -11,7 +11,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Scene scene = new Scene(new GameWindowPane(), 500, 500);
+		Scene scene = new GameWindowScene(500, 500);
 		primaryStage.setScene(scene);
 		
 		
