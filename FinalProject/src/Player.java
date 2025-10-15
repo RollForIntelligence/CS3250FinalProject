@@ -60,7 +60,7 @@ public class Player extends Actor {
 	public void DrawCharacter(int frame) {
 		GraphicsContext gc = this.getGraphicsContext2D();
 		
-		gc.clearRect(0, 0, 100, 125);
+		gc.clearRect(0, 0, this.getWidth(), this.getHeight());
 		
 		// TODO: create a spritesheet to replace all of this drawing;
 		// head

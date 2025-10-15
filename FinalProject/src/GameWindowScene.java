@@ -34,6 +34,13 @@ public class GameWindowScene extends Scene {
 		npc.setLayoutY(200);
 		npc.setyPos(0);
 		
+		EnemyCharacter enemy = new EnemyCharacter(50, 100);
+		actors.add(enemy);
+		enemy.setLayoutX(100);
+		enemy.setxPos(-100);
+		enemy.setLayoutY(200);
+		enemy.setyPos(0);
+		
 		actorPane = new ActorMovementPane(500, 500, player, actors);
 		root.getChildren().add(actorPane);
 		
@@ -67,8 +74,8 @@ public class GameWindowScene extends Scene {
 					EnemyCharacter enemy = (EnemyCharacter) actor;
 					if (GetDistance(event.getX(), event.getY(), enemy.getCenterX(), enemy.getCenterY()) < 50) {
 						if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
-							if (enemy.TakeDamage(3)) {
-								actors.remove(enemy);
+							if (enemy.TakeDamage(3)) { // TODO: replace static value with player.GetDamage()
+								actorPane.Kill(enemy);
 								break;
 							}
 						}
@@ -88,7 +95,7 @@ public class GameWindowScene extends Scene {
 			
 			
 			if (uiActive) {
-				// Prevent movement if the UI is active
+				// Prevents movement if the UI is active
 			}
 			else if (event.getCode() == KeyCode.D) {
 				actorPane.setXMovement(1);

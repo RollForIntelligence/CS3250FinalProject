@@ -47,6 +47,11 @@ public class ActorMovementPane extends Pane {
 		this.yMovement = movement;
 	}
 	
+	public void Kill(Actor actor) {
+		actors.remove(actor);
+		getChildren().remove(actor);
+	}
+	
 	private void startAnimation() {
 //		GraphicsContext gc = this.getGraphicsContext2D();
 		
