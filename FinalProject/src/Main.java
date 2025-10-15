@@ -5,7 +5,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	public static void main(String[] args) {
-		System.out.println(DialogueScrambler.Scramble("Welcome 1234 my 11st project"));
 		launch();
 	}
 

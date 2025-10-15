@@ -5,6 +5,7 @@ public class EnemyCharacter extends Actor {
 	private GraphicsContext gc;
 	private int maxHealth;
 	private int currentHealth;
+	private int damageDealt;
 
 	public EnemyCharacter(int width, int height) {
 		super(width, height);
@@ -12,6 +13,11 @@ public class EnemyCharacter extends Actor {
 		
 		maxHealth = 5;
 		currentHealth = maxHealth;
+		damageDealt = 3;
+	}
+	
+	public int GetDamageDealt() {
+		return damageDealt;
 	}
 	
 	public boolean TakeDamage(int damageValue) {

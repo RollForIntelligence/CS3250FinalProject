@@ -57,12 +57,22 @@ public class Player extends Actor {
 		this.currentHealth = currentHealth;
 	}
 	
+	public boolean TakeDamage(int damageValue) {
+		boolean isDead = false;
+		currentHealth -= damageValue;
+		if (currentHealth <= 1) {
+			isDead = true;
+		}
+		return isDead;
+	}
+	
 	public void DrawCharacter(int frame) {
 		GraphicsContext gc = this.getGraphicsContext2D();
 		
 		gc.clearRect(0, 0, this.getWidth(), this.getHeight());
 		
 		// TODO: create a spritesheet to replace all of this drawing;
+		// paint.net / pixelart
 		// head
 		gc.setFill(Color.TAN);
 		gc.fillOval(40, 10, 20, 20);

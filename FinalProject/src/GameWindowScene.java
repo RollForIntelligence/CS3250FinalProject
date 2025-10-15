@@ -92,7 +92,33 @@ public class GameWindowScene extends Scene {
 		});
 		
 		setOnKeyPressed(event -> {
-			
+			if (event.getCode() == KeyCode.SPACE) {
+				if (uiActive) {
+					uiPane.CloseDialogue();
+					uiActive = false;
+				}
+				else {
+					for (Actor actor : actors) {
+						if (actor instanceof NonPlayerCharacter) {
+							NonPlayerCharacter character = (NonPlayerCharacter) actor;
+							if (GetDistance(player.getxPos(), player.getyPos(), character.getxPos(), character.getyPos()) < 100) {
+								uiPane.OpenDialogue(character.GetDialogue(0));
+								ActivateUI();
+								break;
+							}
+						}
+						if (actor instanceof EnemyCharacter) {
+							EnemyCharacter enemy = (EnemyCharacter) actor;
+							if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
+								if (enemy.TakeDamage(3)) { // TODO: replace static value with player.GetDamage()
+									actorPane.Kill(enemy);
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
 			
 			if (uiActive) {
 				// Prevents movement if the UI is active
