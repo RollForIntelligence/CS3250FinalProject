@@ -18,6 +18,8 @@ public class ActorMovementPane extends Pane {
 	private int yMovement = 0;
 	private ArrayList<Actor> actors;
 	
+	private UIPane uiPane;
+	
 	public ActorMovementPane(int width, int height, Player playerCharacter, ArrayList<Actor> actors) {
 		//super(width, height);
 		this.player = playerCharacter;
@@ -39,6 +41,10 @@ public class ActorMovementPane extends Pane {
 		startAnimation();
 	}
 	
+	public void setUIPane(UIPane pane) {
+		uiPane = pane;
+	}
+	
 	public void setXMovement(int movement) {
 		this.xMovement = movement;
 	}
@@ -47,9 +53,22 @@ public class ActorMovementPane extends Pane {
 		this.yMovement = movement;
 	}
 	
+	public void BounceBack() {
+		player.setxPos(player.getxPos() - (25 * xMovement));
+		player.setyPos(player.getyPos() - (25 * yMovement));
+		
+		player.setLayoutX(200 + player.getxPos());
+		player.setLayoutY(200 + player.getyPos());
+	}
+	
 	public void Kill(Actor actor) {
 		actors.remove(actor);
 		getChildren().remove(actor);
+	}
+	
+	private double GetDistance(double x1, double y1, double x2, double y2) {
+		double distance = Math.hypot(x1 - x2, y1 - y2);
+		return distance;
 	}
 	
 	private void startAnimation() {
@@ -78,6 +97,19 @@ public class ActorMovementPane extends Pane {
 						actor.DrawCharacter();
 					}
 					
+					for (Actor actor : actors) {
+						if (actor instanceof EnemyCharacter) {
+							EnemyCharacter enemy = (EnemyCharacter) actor;
+							if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 50) {
+								if (player.TakeDamage(enemy.GetDamageDealt())) {
+									// TODO: Game Over Screen
+									break;
+								}
+								BounceBack();
+								uiPane.UpdateHealth();
+							}
+						}
+					}
 					
 					if (now - lastAnimationUpdate >= ANIMATION_DELAY) {
 						frame++;

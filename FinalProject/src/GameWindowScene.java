@@ -50,6 +50,8 @@ public class GameWindowScene extends Scene {
 		uiActive = false;
 		root.getChildren().add(uiPane);
 		
+		actorPane.setUIPane(uiPane);
+		
 		SetUpControls();
 	}
 	
@@ -70,7 +72,7 @@ public class GameWindowScene extends Scene {
 						break;
 					}
 				}
-				if (actor instanceof EnemyCharacter) {
+				else if (actor instanceof EnemyCharacter) {
 					EnemyCharacter enemy = (EnemyCharacter) actor;
 					if (GetDistance(event.getX(), event.getY(), enemy.getCenterX(), enemy.getCenterY()) < 50) {
 						if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
@@ -107,7 +109,7 @@ public class GameWindowScene extends Scene {
 								break;
 							}
 						}
-						if (actor instanceof EnemyCharacter) {
+						else if (actor instanceof EnemyCharacter) {
 							EnemyCharacter enemy = (EnemyCharacter) actor;
 							if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
 								if (enemy.TakeDamage(3)) { // TODO: replace static value with player.GetDamage()
