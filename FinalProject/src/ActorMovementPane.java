@@ -20,6 +20,8 @@ public class ActorMovementPane extends Pane {
 	
 	private UIPane uiPane;
 	
+	private AnimationTimer timer;
+	
 	public ActorMovementPane(int width, int height, Player playerCharacter, ArrayList<Actor> actors) {
 		//super(width, height);
 		this.player = playerCharacter;
@@ -74,7 +76,7 @@ public class ActorMovementPane extends Pane {
 	private void startAnimation() {
 //		GraphicsContext gc = this.getGraphicsContext2D();
 		
-		new AnimationTimer() {
+		timer = new AnimationTimer() {
 			
 			int frame = 0;
 			
@@ -102,7 +104,8 @@ public class ActorMovementPane extends Pane {
 							EnemyCharacter enemy = (EnemyCharacter) actor;
 							if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 50) {
 								if (player.TakeDamage(enemy.GetDamageDealt())) {
-									// TODO: Game Over Screen
+									uiPane.GameOver();
+									this.stop();
 									break;
 								}
 								BounceBack();
@@ -120,6 +123,8 @@ public class ActorMovementPane extends Pane {
 				}
 			}
 			
-		}.start();
+		};
+		
+		timer.start();
 	}
 }

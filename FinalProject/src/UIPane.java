@@ -32,6 +32,16 @@ public class UIPane extends AnchorPane {
 		getChildren().add(dialogueBox);
 	}
 	
+	public void GameOver() {
+		UIDisplayPane gameOverScreen = new UIDisplayPane("Game Over", this.getWidth(), this.getHeight());
+		getChildren().remove(playerHealthBar);
+		getChildren().add(gameOverScreen);
+		setBottomAnchor(gameOverScreen, 0.0);
+		setTopAnchor(gameOverScreen, 0.0);
+		setRightAnchor(gameOverScreen, 0.0);
+		setLeftAnchor(gameOverScreen, 0.0);
+	}
+	
 	public void CloseDialogue() {
 		getChildren().remove(dialogueBox);
 	}
