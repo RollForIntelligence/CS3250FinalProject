@@ -66,6 +66,26 @@ public class Player extends Actor {
 		return isDead;
 	}
 	
+	public int getDamage() {
+		if (this.inventory.getFirstItem() instanceof Weapon) {
+			Weapon weapon = (Weapon) inventory.getFirstItem();
+			return weapon.getDamage();
+		}
+		else {
+			return 1;
+		}
+	}
+	
+	public int getRange() {
+		if (this.inventory.getFirstItem() instanceof Weapon) {
+			Weapon weapon = (Weapon) inventory.getFirstItem();
+			return weapon.getRange();
+		}
+		else {
+			return 75;
+		}
+	}
+	
 	public void DrawCharacter(int frame) {
 		GraphicsContext gc = this.getGraphicsContext2D();
 		

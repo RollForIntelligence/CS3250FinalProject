@@ -15,7 +15,7 @@ public class UIDisplayPane extends GridPane {
 		
 		messageLabel.setStyle("-fx-background-color: black; "
 				+ "-fx-text-fill: red; "
-				+ "-fx-label-padding: " + (width - 220) / 2 + ", 0, 0, 0; "
+				+ "-fx-label-padding: " + (width - 220) / 2 + ", 0, 0, 0; " // 220 is the width of the "Game Over" message
 				+ "-fx-font-weight: bold; "
 				+ "-fx-font-family: serif; "
 				+ "-fx-font-size: 40"

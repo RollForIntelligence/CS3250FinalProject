@@ -76,7 +76,7 @@ public class GameWindowScene extends Scene {
 					EnemyCharacter enemy = (EnemyCharacter) actor;
 					if (GetDistance(event.getX(), event.getY(), enemy.getCenterX(), enemy.getCenterY()) < 50) {
 						if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
-							if (enemy.TakeDamage(3)) { // TODO: replace static value with player.GetDamage()
+							if (enemy.TakeDamage(player.getDamage())) { 
 								actorPane.Kill(enemy);
 								break;
 							}

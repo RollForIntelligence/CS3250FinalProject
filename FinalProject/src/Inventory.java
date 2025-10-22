@@ -9,4 +9,8 @@ public class Inventory {
 			items[i] = null;
 		}
 	}
+	
+	public Item getFirstItem() {
+		return items[0];
+	}
 }
