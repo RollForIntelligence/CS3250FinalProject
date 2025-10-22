@@ -13,4 +13,27 @@ public class Inventory {
 	public Item getFirstItem() {
 		return items[0];
 	}
+	
+	public void swapItems(int first, int second) {
+		if (first >= MAX_CAPACITY || second >= MAX_CAPACITY) {
+			return;
+		}
+		else if (first < 0 || second < 0) {
+			return;
+		}
+		else if (first == second) {
+			return;
+		}
+		else {
+			Item temp = items[first];
+			items[first] = items[second];
+			items[second] = temp;
+		}
+	}
+	
+	public Item removeItem(int index) {
+		Item temp = items[index];
+		items[index] = null;
+		return temp;
+	}
 }

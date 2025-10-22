@@ -10,4 +10,14 @@ public abstract class Weapon extends Item {
 	public int getRange() {
 		return range;
 	}
+	
+	public boolean equals(Weapon weapon) {
+		if (!weapon.name.equals(this.name)) {
+			return false;
+		}
+		// TODO: continue with damageValue and range
+		else {
+			return true;
+		}
+	}
 }
