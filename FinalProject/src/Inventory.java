@@ -36,4 +36,59 @@ public class Inventory {
 		items[index] = null;
 		return temp;
 	}
+	
+	public boolean addItem(Item newItem) {
+		boolean successful = false;
+		
+		// Cast the new item to the type of Item it is
+		Item addedItem;
+		if (newItem instanceof Weapon) {
+			addedItem = (Weapon) newItem;
+		}
+		// TODO: add consumable check
+		else {
+			addedItem = newItem;
+		}
+		
+		// Check the current set of items to see if the new item can add to an existing slot
+		for (Item item : items) {
+			if (item == null) {
+				continue;
+			}
+			if (addedItem instanceof Weapon && item instanceof Weapon) {
+				item = (Weapon) item;
+				
+				// Check if the Weapons are the same type
+				if (item.equals(addedItem)) {
+					
+					// Check if there is enough room in the stack of Weapons
+					if (item.quantity + addedItem.quantity <= Weapon.getMaxStackSize()) {
+						item.quantity += addedItem.quantity;
+						successful = true;
+						break;
+					}
+					
+					// Fill any remaining space in the Weapon stack, then continue with the new item's smaller quantity
+					else if (item.quantity < Weapon.getMaxStackSize()) {
+						addedItem.quantity -= (Weapon.getMaxStackSize() - item.quantity);
+						continue;
+					}
+				}
+			}
+			// TODO: add consumable check
+		}
+		
+		// Add the new item to the first empty slot if it hasn't been placed yet
+		if (!successful) {
+			for (Item item : items) {
+				if (item == null) {
+					item = addedItem;
+					successful = true;
+					break;
+				}
+			}
+		}
+		
+		return successful;
+	}
 }
