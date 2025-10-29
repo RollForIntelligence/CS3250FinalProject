@@ -86,8 +86,8 @@ public class GameWindowScene extends Scene {
 				
 			}
 			
-						
-			if (event.getY() >= 400) {
+			
+			if (event.getY() >= this.getHeight() - 100) {
 				uiPane.CloseDialogue();
 				uiActive = false;
 			}
@@ -112,7 +112,7 @@ public class GameWindowScene extends Scene {
 						else if (actor instanceof EnemyCharacter) {
 							EnemyCharacter enemy = (EnemyCharacter) actor;
 							if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
-								if (enemy.TakeDamage(3)) { // TODO: replace static value with player.GetDamage()
+								if (enemy.TakeDamage(player.getDamage())) { 
 									actorPane.Kill(enemy);
 									break;
 								}

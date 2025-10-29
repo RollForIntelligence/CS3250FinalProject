@@ -7,12 +7,7 @@ public class UIPane extends AnchorPane {
 	private PlayerHealthBar playerHealthBar;
 	
 	public UIPane(int width, int height, Player player) {
-//		DialogueBox dialogueBox = new DialogueBox("Example dialogue");
-//		setBottomAnchor(dialogueBox, 20.0);
-//		setLeftAnchor(dialogueBox, 20.0);
-//		setRightAnchor(dialogueBox, 20.0);
-		
-		this.playerHealthBar = new PlayerHealthBar(width, 50, player);
+		this.playerHealthBar = new PlayerHealthBar(width - 20, 50, player);
 		setTopAnchor(playerHealthBar, 20.0);
 		setLeftAnchor(playerHealthBar, 20.0);
 		
@@ -25,7 +20,7 @@ public class UIPane extends AnchorPane {
 		if (this.getChildren().contains(dialogueBox)) {
 			return;
 		}
-		this.dialogueBox = new DialogueBox(dialogueText);
+		this.dialogueBox = new DialogueBox(dialogueText, this.getWidth(), 100);
 		setBottomAnchor(dialogueBox, 20.0);
 		setLeftAnchor(dialogueBox, 20.0);
 		setRightAnchor(dialogueBox, 20.0);

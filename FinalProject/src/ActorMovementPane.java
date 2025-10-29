@@ -37,8 +37,6 @@ public class ActorMovementPane extends Pane {
 		}
 		
 		
-		// TODO: Replace with a spritesheet once I learn how to make one
-		// Image playerCharacterLabel = playerCharacter.getSprite();
 
 		startAnimation();
 	}
