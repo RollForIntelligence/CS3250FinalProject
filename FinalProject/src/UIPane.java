@@ -44,4 +44,11 @@ public class UIPane extends AnchorPane {
 	public void UpdateHealth() {
 		playerHealthBar.DisplayHealth();
 	}
+	
+	public boolean updateDialogue() {
+		if (this.getChildren().contains(dialogueBox)) {
+			return dialogueBox.advanceDialogue();
+		}
+		return true;
+	}
 }

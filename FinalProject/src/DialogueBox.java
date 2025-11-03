@@ -9,8 +9,14 @@ import javafx.scene.paint.Color;
  * This class represents the box which spawns to display dialogue. 
  */
 public class DialogueBox extends StackPane {
+	private String displayText;
+	private int indexDisplayed;
+	
+	private int displaySpeed = 3;
+	
+	private Label dialogueLabel;
+	
 	public DialogueBox(String dialogueText, double width, double height) {
-		
 		Canvas dialogueBoxBackground = new Canvas(width, height);
 		
 		GraphicsContext dbbgc = dialogueBoxBackground.getGraphicsContext2D();
@@ -24,9 +30,11 @@ public class DialogueBox extends StackPane {
 		getChildren().add(dialogueBoxBackground);
 		
 		
-		String displayText = DialogueScrambler.Scramble(dialogueText);
+		displayText = DialogueScrambler.Scramble(dialogueText);
 		
-		Label dialogueLabel = new Label(displayText);
+		dialogueLabel = new Label("");
+		indexDisplayed = 0;
+		
 		dialogueLabel.setWrapText(true);
 		dialogueLabel.setAlignment(Pos.CENTER);
 		dialogueLabel.setMaxWidth(width - 60);
@@ -34,6 +42,26 @@ public class DialogueBox extends StackPane {
 		dialogueLabel.setStyle("-fx-font-family: serif; ");
 		
 		getChildren().add(dialogueLabel);
+	}
+	
+	public boolean advanceDialogue() {
+		boolean finished = false;
+		
+		if (indexDisplayed < displayText.length()) { // If there is still text to display
+			indexDisplayed += displaySpeed; // Increase the amount of text displayed
+			
+			if (indexDisplayed >= displayText.length()) {
+				indexDisplayed = displayText.length(); // If the index exceeds the length of the text, set the two as equal
+			}
+			
+			dialogueLabel.setText(displayText.substring(0, indexDisplayed)); // Displays from the first character to the displayed index
+		}
+		
+		if (indexDisplayed == displayText.length()) { // If there is no longer text to display
+			finished = true;
+		}
+		
+		return finished;
 	}
 	
 	

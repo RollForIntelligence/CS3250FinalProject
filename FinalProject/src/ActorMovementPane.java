@@ -112,6 +112,8 @@ public class ActorMovementPane extends Pane {
 						}
 					}
 					
+					uiPane.updateDialogue();
+					
 					if (now - lastAnimationUpdate >= ANIMATION_DELAY) {
 						frame++;
 						frame = frame % 4;
