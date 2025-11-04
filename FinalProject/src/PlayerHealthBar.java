@@ -8,7 +8,8 @@ public class PlayerHealthBar extends Canvas {
 	GraphicsContext gc;
 	
 	public PlayerHealthBar(int width, int height, Player player) {
-		super(width, height);
+		// Makes the width of the player's health bar as small as possible in order to improve resizability
+		super(width > (40 * player.getMaxHealth() / 4) + 40 ? (40 * player.getMaxHealth() / 4) + 40 : width, height); 
 		this.player = player;
 		gc = this.getGraphicsContext2D();
 		DisplayHealth();

@@ -20,15 +20,17 @@ public class DialogueBox extends StackPane {
 		Canvas dialogueBoxBackground = new Canvas(width, height);
 		
 		GraphicsContext dbbgc = dialogueBoxBackground.getGraphicsContext2D();
-		dbbgc.setFill(Color.WHITE);
-		dbbgc.setStroke(Color.BISQUE);
-		dbbgc.setLineWidth(5);
-		
-		dbbgc.fillRoundRect(20, 0, width-40, height, height / 4, height / 4);
-		dbbgc.strokeRoundRect(20, 0, width-40, height, height / 4, height / 4);
+		drawBackground(dbbgc);
 		
 		getChildren().add(dialogueBoxBackground);
 		
+		// Will only grow when open, won't shrink
+		// TODO: Tweak settings to allow the DialogueBox to shrink when open
+		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> { 
+			dialogueBoxBackground.setWidth(DialogueBox.this.getWidth());
+			dialogueBoxBackground.setHeight(DialogueBox.this.getHeight());
+			drawBackground(dbbgc);
+		});
 		
 		displayText = DialogueScrambler.Scramble(dialogueText);
 		
@@ -42,6 +44,20 @@ public class DialogueBox extends StackPane {
 		dialogueLabel.setStyle("-fx-font-family: serif; ");
 		
 		getChildren().add(dialogueLabel);
+	}
+	
+	private void drawBackground(GraphicsContext gc) {
+		double width = this.getWidth();
+		double height = this.getHeight();
+		
+		gc.clearRect(0, 0, width, height);
+		
+		gc.setFill(Color.WHITE);
+		gc.setStroke(Color.BISQUE);
+		gc.setLineWidth(5);
+		
+		gc.fillRoundRect(20, 0, width-40, height, height / 4, height / 4);
+		gc.strokeRoundRect(20, 0, width-40, height, height / 4, height / 4);
 	}
 	
 	public boolean advanceDialogue() {

@@ -1,44 +1,38 @@
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 /*
  * This pane is meant to hold the player's UI, which currently displays a stand-in healthbar and a DialogueBox
  */
-public class UIPane extends AnchorPane {
+public class UIPane extends BorderPane {
 	private DialogueBox dialogueBox;
 	private PlayerHealthBar playerHealthBar;
 	
 	public UIPane(int width, int height, Player player) {
 		this.playerHealthBar = new PlayerHealthBar(width - 20, 50, player);
-		setTopAnchor(playerHealthBar, 20.0);
-		setLeftAnchor(playerHealthBar, 20.0);
+		setTop(playerHealthBar);
 		
-		
-		
-		getChildren().add(playerHealthBar);
+		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
+//			System.out.println(newValue);
+			
+		});
 	}
 	
 	public void OpenDialogue(String dialogueText) {
-		if (this.getChildren().contains(dialogueBox)) {
+		if (this.getBottom() instanceof DialogueBox) {
 			return;
 		}
 		this.dialogueBox = new DialogueBox(dialogueText, this.getWidth(), 100);
-		setBottomAnchor(dialogueBox, 20.0);
-		setLeftAnchor(dialogueBox, 20.0);
-		setRightAnchor(dialogueBox, 20.0);
-		getChildren().add(dialogueBox);
+		this.setBottom(dialogueBox);
 	}
 	
 	public void GameOver() {
 		UIDisplayPane gameOverScreen = new UIDisplayPane("Game Over", this.getWidth(), this.getHeight());
-		getChildren().remove(playerHealthBar);
-		getChildren().add(gameOverScreen);
-		setBottomAnchor(gameOverScreen, 0.0);
-		setTopAnchor(gameOverScreen, 0.0);
-		setRightAnchor(gameOverScreen, 0.0);
-		setLeftAnchor(gameOverScreen, 0.0);
+		this.setTop(null);
+		this.setCenter(gameOverScreen);
 	}
 	
 	public void CloseDialogue() {
-		getChildren().remove(dialogueBox);
+		this.setBottom(null);
 	}
 	
 	public void UpdateHealth() {
