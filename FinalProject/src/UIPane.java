@@ -7,14 +7,13 @@ public class UIPane extends BorderPane {
 	private DialogueBox dialogueBox;
 	private PlayerHealthBar playerHealthBar;
 	
+	private boolean inventoryOpen = false;
+	
 	public UIPane(int width, int height, Player player) {
 		this.playerHealthBar = new PlayerHealthBar(width - 20, 50, player);
 		setTop(playerHealthBar);
 		
-		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
-//			System.out.println(newValue);
-			
-		});
+		
 	}
 	
 	public void OpenDialogue(String dialogueText) {
@@ -44,5 +43,25 @@ public class UIPane extends BorderPane {
 			return dialogueBox.advanceDialogue();
 		}
 		return true;
+	}
+	
+	public void openInventory() {
+		if (this.getCenter() == null) {
+			// TODO: place inventory pane in the center
+			
+			inventoryOpen = true;
+		}
+	}
+	
+	public void closeInventory() {
+		if (inventoryOpen) {
+			this.setCenter(null);
+			
+			inventoryOpen = false;
+		}
+	}
+	
+	public boolean inventoryOpen() {
+		return inventoryOpen;
 	}
 }

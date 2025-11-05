@@ -14,6 +14,14 @@ public class Inventory {
 		return items[0];
 	}
 	
+	public Item getItemAt(int index) {
+		if (index >= MAX_CAPACITY) {
+			return null;
+		}
+		// TODO: return item at index
+		return null;
+	}
+	
 	public void swapItems(int first, int second) {
 		if (first >= MAX_CAPACITY || second >= MAX_CAPACITY) {
 			return;

@@ -5,5 +5,6 @@ public class Spear extends Weapon {
 		this.quantity = 1;
 		this.damageValue = damageValue;
 		this.range = 150;
+//		this.sprite = // TODO: place sprite here
 	}
 }

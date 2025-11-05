@@ -94,10 +94,27 @@ public class GameWindowScene extends Scene {
 		});
 		
 		setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.SHIFT) {
+				if (uiActive) {
+					if (uiPane.inventoryOpen()) {
+						uiPane.closeInventory();
+						uiActive = false;
+					}
+				}
+				else {
+					// TODO: Open the inventory
+				}
+			}
+			
 			if (event.getCode() == KeyCode.SPACE) {
 				if (uiActive) {
-					uiPane.CloseDialogue();
-					uiActive = false;
+					if (uiPane.inventoryOpen()) {
+						// Don't close the dialogue box because the active element is the inventory
+					}
+					else {
+						uiPane.CloseDialogue();
+						uiActive = false;
+					}
 				}
 				else {
 					for (Actor actor : actors) {

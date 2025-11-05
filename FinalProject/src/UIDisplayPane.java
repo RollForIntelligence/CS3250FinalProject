@@ -1,6 +1,9 @@
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 public class UIDisplayPane extends StackPane {
@@ -18,9 +21,46 @@ public class UIDisplayPane extends StackPane {
 		// TODO: set up a way to stop the timer when the inventory is closed
 	}
 	
+	private class ItemTile extends Canvas { // : make ItemTile a canvas to draw the item's images on them
+		private Item item;
+		
+		public ItemTile(double size, Item item) {
+			super(size, size);
+			this.item = item;
+			drawTile();
+		}
+		
+		private void drawTile() {
+			GraphicsContext gc = this.getGraphicsContext2D();
+			gc.setStroke(Color.DARKGRAY);
+			gc.setFill(Color.LIGHTGRAY);
+			
+			gc.setLineWidth(5);
+			
+			gc.fillRect(0, 0, this.getWidth(), this.getHeight());
+			gc.strokeRect(0, 0, this.getWidth(), this.getHeight());
+			
+			if (item != null) {
+				gc.drawImage(item.getSprite(), 5, 5, this.getWidth() - 5, this.getHeight() - 5);
+			}
+		}
+	}
+	
 	public UIDisplayPane(String message, double width, double height) {
 		Label messageLabel = new Label(message);
 		
+		formatGameOverMessage(messageLabel, width, height);
+		messageLabel.setTextAlignment(TextAlignment.CENTER);
+		this.getChildren().add(messageLabel);
+		
+		// TODO: See if there's a way to reduce the flickering when growing the window beyond previous bounds
+		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
+			formatGameOverMessage(messageLabel, UIDisplayPane.this.getWidth(), UIDisplayPane.this.getHeight());
+			
+		});
+	}
+	
+	private void formatGameOverMessage(Label messageLabel, double width, double height) {
 		messageLabel.setStyle("-fx-background-color: black; "
 				+ "-fx-text-fill: red; "
 				+ "-fx-label-padding: 0 0 0 " + (width - 220) / 2 + "; " // 220 is the width of the "Game Over" message
@@ -32,7 +72,5 @@ public class UIDisplayPane extends StackPane {
 		// displays the message at the center of the screen in large block text
 		messageLabel.setMinWidth(width);
 		messageLabel.setMinHeight(height);
-		messageLabel.setTextAlignment(TextAlignment.CENTER);
-		this.getChildren().add(messageLabel);
 	}
 }
