@@ -1,7 +1,7 @@
 
 public class Inventory {
 	private Item[] items;
-	private final int MAX_CAPACITY = 20;
+	public final int MAX_CAPACITY = 20;
 	
 	public Inventory() {
 		this.items = new Item[MAX_CAPACITY];
@@ -15,11 +15,11 @@ public class Inventory {
 	}
 	
 	public Item getItemAt(int index) {
-		if (index >= MAX_CAPACITY) {
+		if (index >= MAX_CAPACITY || index < 0) {
 			return null;
 		}
-		// TODO: return item at index
-		return null;
+		
+		return items[index];
 	}
 	
 	public void swapItems(int first, int second) {

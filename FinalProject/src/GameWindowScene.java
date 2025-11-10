@@ -102,7 +102,9 @@ public class GameWindowScene extends Scene {
 					}
 				}
 				else {
-					// TODO: Open the inventory
+					// : Open the inventory
+					uiPane.openInventory(player);
+					uiActive = true;
 				}
 			}
 			

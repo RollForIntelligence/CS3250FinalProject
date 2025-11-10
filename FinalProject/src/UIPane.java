@@ -1,5 +1,6 @@
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 /*
  * This pane is meant to hold the player's UI, which currently displays a stand-in healthbar and a DialogueBox
  */
@@ -45,9 +46,14 @@ public class UIPane extends BorderPane {
 		return true;
 	}
 	
-	public void openInventory() {
+	public void openInventory(Player player) {
 		if (this.getCenter() == null) {
-			// TODO: place inventory pane in the center
+			UIDisplayPane inventoryPane = new UIDisplayPane(player.getInventory(), this.getWidth(), this.getHeight());
+			this.setCenter(inventoryPane);
+
+			Pane spacingPane = new Pane();
+			spacingPane.setPrefWidth((this.getWidth() - inventoryPane.getInventoryWidth()) / 2);
+			this.setLeft(spacingPane);
 			
 			inventoryOpen = true;
 		}
@@ -56,6 +62,7 @@ public class UIPane extends BorderPane {
 	public void closeInventory() {
 		if (inventoryOpen) {
 			this.setCenter(null);
+			this.setLeft(null);
 			
 			inventoryOpen = false;
 		}

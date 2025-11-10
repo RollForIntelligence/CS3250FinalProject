@@ -1,24 +1,42 @@
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 public class UIDisplayPane extends StackPane {
-	
+	double width = 0.0;
+	double height = 0.0;
 	
 	public UIDisplayPane(Inventory inventory, double width, double height) {
-		// TODO: set up a GridPane of tiles for the items
+		// : set up a GridPane of tiles for the items
+		GridPane inventoryGrid = new GridPane();
 		
 		// Ensures the tiles are squares that fit within the bounds of the screen
 		double tileSize = Math.min((width >= 400 ? 80 : width / 5), (height >= 320 ? 80 : height / 4));
 		
-		// TODO: display the items from the inventory in the grid
+		for (int i = 0; i < inventory.MAX_CAPACITY; i++) {
+			ItemTile tile = new ItemTile(tileSize, inventory.getItemAt(i));
+			inventoryGrid.add(tile, i / 4, i % 4);
+		}
+		
+		this.width = tileSize * 5;
+		this.height = tileSize * 4;
+		
+		this.getChildren().add(inventoryGrid);
+		
 		// TODO: set up an animationTimer that runs while the UIDisplayPane is open
 		// TODO: allow the user to appear to move a copy of a tile around with their mouse
 		// TODO: set up a way to stop the timer when the inventory is closed
+	}
+	
+	public double getInventoryWidth() {
+		return width;
 	}
 	
 	private class ItemTile extends Canvas { // : make ItemTile a canvas to draw the item's images on them
@@ -44,33 +62,32 @@ public class UIDisplayPane extends StackPane {
 				gc.drawImage(item.getSprite(), 5, 5, this.getWidth() - 5, this.getHeight() - 5);
 			}
 		}
+		
+		public void setItem(Item item) { this.item = item; }
+		public Item getItem() { return item; }
 	}
 	
 	public UIDisplayPane(String message, double width, double height) {
-		Label messageLabel = new Label(message);
+		Canvas gameOverCanvas = new Canvas();
+		formatGameOverCanvas(gameOverCanvas, message, width, height);
 		
-		formatGameOverMessage(messageLabel, width, height);
-		messageLabel.setTextAlignment(TextAlignment.CENTER);
-		this.getChildren().add(messageLabel);
+		this.getChildren().add(gameOverCanvas);
 		
-		// TODO: See if there's a way to reduce the flickering when growing the window beyond previous bounds
 		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
-			formatGameOverMessage(messageLabel, UIDisplayPane.this.getWidth(), UIDisplayPane.this.getHeight());
-			
+			formatGameOverCanvas(gameOverCanvas, message, UIDisplayPane.this.getWidth(), UIDisplayPane.this.getHeight());
 		});
 	}
 	
-	private void formatGameOverMessage(Label messageLabel, double width, double height) {
-		messageLabel.setStyle("-fx-background-color: black; "
-				+ "-fx-text-fill: red; "
-				+ "-fx-label-padding: 0 0 0 " + (width - 220) / 2 + "; " // 220 is the width of the "Game Over" message
-				+ "-fx-font-weight: bold; "
-				+ "-fx-font-family: serif; "
-				+ "-fx-font-size: 40"
-				);
-
-		// displays the message at the center of the screen in large block text
-		messageLabel.setMinWidth(width);
-		messageLabel.setMinHeight(height);
+	private void formatGameOverCanvas(Canvas canvas, String message, double width, double height) {
+		canvas.setWidth(width);
+		canvas.setHeight(height);
+		
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.setFill(Color.BLACK);
+		gc.fillRect(0, 0, width, height);
+		
+		gc.setFont(Font.font("Times New Roman", FontWeight.BOLD, 40.0));
+		gc.setFill(Color.RED);
+		gc.fillText(message, (width - 220) / 2, height / 2);
 	}
 }
