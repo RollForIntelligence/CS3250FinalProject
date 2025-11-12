@@ -1,8 +1,11 @@
 
+import javafx.animation.AnimationTimer;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -12,6 +15,10 @@ import javafx.scene.text.TextAlignment;
 public class UIDisplayPane extends StackPane {
 	double width = 0.0;
 	double height = 0.0;
+	
+	AnimationTimer timer;
+	
+	Pane movementPane;
 	
 	public UIDisplayPane(Inventory inventory, double width, double height) {
 		// : set up a GridPane of tiles for the items
@@ -30,13 +37,60 @@ public class UIDisplayPane extends StackPane {
 		
 		this.getChildren().add(inventoryGrid);
 		
-		// TODO: set up an animationTimer that runs while the UIDisplayPane is open
+		// Create a pane to display the dynamic positions of the moving inventory items
+		movementPane = new Pane();
+		this.getChildren().add(movementPane);
+		
+		// set up an animationTimer that runs while the UIDisplayPane is open
+		timer = new AnimationTimer() {
+			long lastUpdate = System.nanoTime();
+			private final long DELAY = 30_000_000; // 30 milliseconds
+			
+			@Override
+			public void handle(long now) {
+				if (now - lastUpdate >= DELAY) {
+					// TODO: handle any needed animation overhead
+					
+					lastUpdate = now;
+				}
+			}
+		};
+		
+		timer.start();
+		
+		// TODO: allow the inventory to adjust when the window changes size
+		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> { 
+			;
+		});
+		
 		// TODO: allow the user to appear to move a copy of a tile around with their mouse
-		// TODO: set up a way to stop the timer when the inventory is closed
+		
+		this.setOnMousePressed(event -> {
+			ItemTile tileClicked;
+			for (Node tile : inventoryGrid.getChildren()) {
+				if (tile.getBoundsInParent().intersects(event.getX(), event.getY(), 1, 1)) {
+					tileClicked = (ItemTile) tile;
+					System.out.println("Tile Clicked: " + tileClicked.getItem());
+					break;
+				}
+			}
+			
+			// TODO: create a copy of the tile in question to place in the movementPane at the event's location
+		});
+		
+		// TODO: setOnMouseDragged: move any tile in the movementPane
+		
+		// TODO: setOnMouseReleased: place the tile in the movementPane into the corresponding position in the inventory
 	}
 	
 	public double getInventoryWidth() {
 		return width;
+	}
+	
+	public void closeInventory() {
+		if (timer != null) {
+			timer.stop();
+		}
 	}
 	
 	private class ItemTile extends Canvas { // : make ItemTile a canvas to draw the item's images on them

@@ -57,11 +57,15 @@ public class GameWindowScene extends Scene {
 	
 	private void SetUpControls() {
 		setOnMouseClicked(event -> {
+			
 			for (Actor actor : actors) {
 				if (actor instanceof NonPlayerCharacter) {
-					NonPlayerCharacter character = (NonPlayerCharacter) actor;
+					NonPlayerCharacter character = (NonPlayerCharacter) actor; // TODO: replace the getDistance function here with intersects
 					if (GetDistance(event.getX(), event.getY(), character.getCenterX(), character.getCenterY()) < 50) {
-						if (GetDistance(player.getxPos(), player.getyPos(), character.getxPos(), character.getyPos()) < 100) {
+						if (uiActive) {
+							// Do not open a dialogueBox if the UI is already active
+						}
+						else if (GetDistance(player.getxPos(), player.getyPos(), character.getxPos(), character.getyPos()) < 100) {
 							uiPane.OpenDialogue(character.GetDialogue(0));
 							ActivateUI();
 						}
@@ -73,7 +77,7 @@ public class GameWindowScene extends Scene {
 					}
 				}
 				else if (actor instanceof EnemyCharacter) {
-					EnemyCharacter enemy = (EnemyCharacter) actor;
+					EnemyCharacter enemy = (EnemyCharacter) actor; // TODO: replace the getDistance function here with intersects
 					if (GetDistance(event.getX(), event.getY(), enemy.getCenterX(), enemy.getCenterY()) < 50) {
 						if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
 							if (enemy.TakeDamage(player.getDamage())) { 
@@ -104,7 +108,7 @@ public class GameWindowScene extends Scene {
 				else {
 					// : Open the inventory
 					uiPane.openInventory(player);
-					uiActive = true;
+					ActivateUI();
 				}
 			}
 			
@@ -129,7 +133,7 @@ public class GameWindowScene extends Scene {
 							}
 						}
 						else if (actor instanceof EnemyCharacter) {
-							EnemyCharacter enemy = (EnemyCharacter) actor;
+							EnemyCharacter enemy = (EnemyCharacter) actor; // TODO: replace the getDistance function here with intersects
 							if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
 								if (enemy.TakeDamage(player.getDamage())) { 
 									actorPane.Kill(enemy);

@@ -61,6 +61,7 @@ public class UIPane extends BorderPane {
 	
 	public void closeInventory() {
 		if (inventoryOpen) {
+			((UIDisplayPane)(this.getCenter())).closeInventory();
 			this.setCenter(null);
 			this.setLeft(null);
 			
