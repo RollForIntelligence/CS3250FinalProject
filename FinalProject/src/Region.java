@@ -8,6 +8,9 @@ public class Region extends Canvas {
 		
 		GraphicsContext gc = this.getGraphicsContext2D();
 		
+		// TODO: use 20_Retro_Convert to create a background for the region
+		// TODO: place the background here
+		// TODO: allow this pane to change size with the window
 		// Background color: grass
 		gc.setFill(Color.DARKGREEN);
 		gc.fillRect(0, 0, width, height);

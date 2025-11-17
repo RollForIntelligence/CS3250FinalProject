@@ -60,8 +60,8 @@ public class GameWindowScene extends Scene {
 			
 			for (Actor actor : actors) {
 				if (actor instanceof NonPlayerCharacter) {
-					NonPlayerCharacter character = (NonPlayerCharacter) actor; // TODO: replace the getDistance function here with intersects
-					if (GetDistance(event.getX(), event.getY(), character.getCenterX(), character.getCenterY()) < 50) {
+					NonPlayerCharacter character = (NonPlayerCharacter) actor; 
+					if (character.getBoundsInParent().intersects(event.getX(), event.getY(), 1, 1)) {
 						if (uiActive) {
 							// Do not open a dialogueBox if the UI is already active
 						}
@@ -77,8 +77,8 @@ public class GameWindowScene extends Scene {
 					}
 				}
 				else if (actor instanceof EnemyCharacter) {
-					EnemyCharacter enemy = (EnemyCharacter) actor; // TODO: replace the getDistance function here with intersects
-					if (GetDistance(event.getX(), event.getY(), enemy.getCenterX(), enemy.getCenterY()) < 50) {
+					EnemyCharacter enemy = (EnemyCharacter) actor; 
+					if (enemy.getBoundsInParent().intersects(event.getX(), event.getY(), 1, 1)) {
 						if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
 							if (enemy.TakeDamage(player.getDamage())) { 
 								actorPane.Kill(enemy);
@@ -133,8 +133,8 @@ public class GameWindowScene extends Scene {
 							}
 						}
 						else if (actor instanceof EnemyCharacter) {
-							EnemyCharacter enemy = (EnemyCharacter) actor; // TODO: replace the getDistance function here with intersects
-							if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
+							EnemyCharacter enemy = (EnemyCharacter) actor; 
+							if (player.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
 								if (enemy.TakeDamage(player.getDamage())) { 
 									actorPane.Kill(enemy);
 									break;

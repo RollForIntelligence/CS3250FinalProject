@@ -13,22 +13,21 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 public class UIDisplayPane extends StackPane {
-	double width = 0.0;
-	double height = 0.0;
-	
-	AnimationTimer timer;
-	
-	Pane movementPane;
+	private double width = 0.0;
+	private double height = 0.0;
+		
+	private Pane movementPane;
+	private GridPane inventoryGrid;
 	
 	public UIDisplayPane(Inventory inventory, double width, double height) {
 		// : set up a GridPane of tiles for the items
-		GridPane inventoryGrid = new GridPane();
+		inventoryGrid = new GridPane();
 		
 		// Ensures the tiles are squares that fit within the bounds of the screen
 		double tileSize = Math.min((width >= 400 ? 80 : width / 5), (height >= 320 ? 80 : height / 4));
 		
 		for (int i = 0; i < inventory.MAX_CAPACITY; i++) {
-			ItemTile tile = new ItemTile(tileSize, inventory.getItemAt(i));
+			ItemTile tile = new ItemTile(tileSize, inventory.getItemAt(i), i);
 			inventoryGrid.add(tile, i / 4, i % 4);
 		}
 		
@@ -40,47 +39,76 @@ public class UIDisplayPane extends StackPane {
 		// Create a pane to display the dynamic positions of the moving inventory items
 		movementPane = new Pane();
 		this.getChildren().add(movementPane);
-		
-		// set up an animationTimer that runs while the UIDisplayPane is open
-		timer = new AnimationTimer() {
-			long lastUpdate = System.nanoTime();
-			private final long DELAY = 30_000_000; // 30 milliseconds
-			
-			@Override
-			public void handle(long now) {
-				if (now - lastUpdate >= DELAY) {
-					// TODO: handle any needed animation overhead
-					
-					lastUpdate = now;
-				}
-			}
-		};
-		
-		timer.start();
-		
+				
 		// TODO: allow the inventory to adjust when the window changes size
 		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> { 
-			;
+			renderInventory(inventory, UIDisplayPane.this.getWidth(), UIDisplayPane.this.getHeight());
 		});
 		
-		// TODO: allow the user to appear to move a copy of a tile around with their mouse
-		
+		// Allow the user to appear to move a copy of a tile around with their mouse
 		this.setOnMousePressed(event -> {
-			ItemTile tileClicked;
+			ItemTile tileClicked = null;
 			for (Node tile : inventoryGrid.getChildren()) {
 				if (tile.getBoundsInParent().intersects(event.getX(), event.getY(), 1, 1)) {
-					tileClicked = (ItemTile) tile;
-					System.out.println("Tile Clicked: " + tileClicked.getItem());
+					tileClicked = ((ItemTile) tile).copy();
 					break;
 				}
 			}
 			
-			// TODO: create a copy of the tile in question to place in the movementPane at the event's location
+			// Create a copy of the tile in question to place in the movementPane at the event's location
+			if (tileClicked != null) {
+				movementPane.getChildren().add(tileClicked);
+				tileClicked.setLayoutX(event.getX());
+				tileClicked.setLayoutY(event.getY());
+			}
 		});
 		
-		// TODO: setOnMouseDragged: move any tile in the movementPane
+		// setOnMouseDragged: move any tile in the movementPane
+		this.setOnMouseDragged(event -> {
+			if (movementPane.getChildren().size() > 0) {
+				Node movingTile = movementPane.getChildren().get(0);
+				movingTile.setLayoutX(event.getX());
+				movingTile.setLayoutY(event.getY());
+			}
+		});
 		
-		// TODO: setOnMouseReleased: place the tile in the movementPane into the corresponding position in the inventory
+		// setOnMouseReleased: place the tile in the movementPane into the corresponding position in the inventory
+		this.setOnMouseReleased(event -> {
+			if (movementPane.getChildren().size() > 0) {
+				for (Node tile : inventoryGrid.getChildren()) {
+					if (tile.getBoundsInParent().intersects(event.getX(), event.getY(), 1, 1)) {
+						ItemTile movingTile = (ItemTile) movementPane.getChildren().get(0);
+						ItemTile tileSelected = (ItemTile) tile;
+						inventory.swapItems(movingTile.getIndex(), tileSelected.getIndex());
+						System.out.println(movingTile.getIndex() + "->" + tileSelected.getIndex());
+						renderInventory(inventory, width, height);
+						break;
+					}
+				}
+				movementPane.getChildren().remove(0);
+			}
+		});
+	}
+	
+	public void renderInventory(Inventory inventory, double width, double height) {
+		if (inventoryGrid == null) {
+			return;
+		}
+		
+		// relocate the logic for creating the inventory panel here
+		inventoryGrid.getChildren().clear();
+		
+		// Ensures the tiles are squares that fit within the bounds of the screen
+		double tileSize = Math.min((width >= 400 ? 80 : width / 5), (height >= 320 ? 80 : height / 4));
+		
+		for (int i = 0; i < inventory.MAX_CAPACITY; i++) {
+			ItemTile tile = new ItemTile(tileSize, inventory.getItemAt(i), i);
+			inventoryGrid.add(tile, i / 4, i % 4);
+		}
+		
+		this.width = tileSize * 5;
+		this.height = tileSize * 4;
+		
 	}
 	
 	public double getInventoryWidth() {
@@ -88,17 +116,17 @@ public class UIDisplayPane extends StackPane {
 	}
 	
 	public void closeInventory() {
-		if (timer != null) {
-			timer.stop();
-		}
+		
 	}
 	
 	private class ItemTile extends Canvas { // : make ItemTile a canvas to draw the item's images on them
 		private Item item;
+		private int index;
 		
-		public ItemTile(double size, Item item) {
+		public ItemTile(double size, Item item, int index) {
 			super(size, size);
 			this.item = item;
+			this.index = index;
 			drawTile();
 		}
 		
@@ -117,8 +145,13 @@ public class UIDisplayPane extends StackPane {
 			}
 		}
 		
-		public void setItem(Item item) { this.item = item; }
 		public Item getItem() { return item; }
+		public int getIndex() { return index; }
+		
+		public ItemTile copy() {
+			ItemTile copy = new ItemTile(this.getWidth(), this.getItem(), index);
+			return copy;
+		}
 	}
 	
 	public UIDisplayPane(String message, double width, double height) {
