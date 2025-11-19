@@ -23,16 +23,13 @@ public class Player extends Actor {
 		return super.getxPos();
 	}
 
-	public void setxPos(double xPos) {
-		super.setxPos(xPos);
-	}
-
 	public double getyPos() {
 		return super.getyPos();
 	}
-
-	public void setyPos(double yPos) {
-		super.setyPos(yPos);
+	
+	public void move(double xMovement, double yMovement) {
+		super.setxPos(super.getxPos() + xMovement);
+		super.setyPos(super.getyPos() + yMovement);
 	}
 
 	public int getMaxHealth() {

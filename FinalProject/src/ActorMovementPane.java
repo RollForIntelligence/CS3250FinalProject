@@ -35,8 +35,6 @@ public class ActorMovementPane extends Pane {
 		for (Actor actor : actors) {
 			this.getChildren().add(actor);
 		}
-		
-		
 
 		startAnimation();
 	}
@@ -86,8 +84,7 @@ public class ActorMovementPane extends Pane {
 			@Override
 			public void handle(long now) {
 				if (now - lastUpdate >= DELAY) {
-					player.setxPos(player.getxPos() + xMovement);
-					player.setyPos(player.getyPos() + yMovement);
+					player.move(xMovement, yMovement);
 					
 					player.setLayoutX(200 + player.getxPos());
 					player.setLayoutY(200 + player.getyPos());

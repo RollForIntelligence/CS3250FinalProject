@@ -1,22 +1,50 @@
+import java.io.InputStream;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Region extends Canvas {
-	public Region(int width, int height) {
+	private Player player;
+	private Image backgroundImage;
+	
+	public Region(int width, int height, Player player) {
 		super(width, height);
 		
+		this.player = player;
+//		InputStream inputStream = getClass().getResourceAsStream("");
+//		backgroundImage = new Image(inputStream);
 		GraphicsContext gc = this.getGraphicsContext2D();
 		
 		// TODO: use 20_Retro_Convert to create a background for the region
-		// TODO: place the background here
-		// TODO: allow this pane to change size with the window
-		// Background color: grass
-		gc.setFill(Color.DARKGREEN);
-		gc.fillRect(0, 0, width, height);
 		
-		// brown path
-		gc.setFill(Color.SADDLEBROWN);
-		gc.fillRect(0, 300, width, 50);
+		
+		// TODO: allow this pane to change size with the window
+//		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
+//			;
+//		});
+		
+		render();
+	}
+	
+	private void render() {
+		GraphicsContext gc = this.getGraphicsContext2D();
+		
+		gc.setFill(Color.BLACK); // TODO: delete this later
+		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
+		
+		// TODO: uncomment this when I have a background image
+//		gc.save();
+//    	gc.translate(this.getWidth() / 2, this.getHeight() / 2);
+//    	gc.translate(-player.getxPos(), -player.getyPos());
+//    	
+//    	gc.setImageSmoothing(false);
+//    	gc.drawImage(backgroundImage, 0, 0, 2500, 2500); // TODO: change this size to the size of the background image
+//    	gc.restore();
+	}
+	
+	public void move() {
+		render();
 	}
 }

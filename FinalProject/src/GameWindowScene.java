@@ -21,11 +21,11 @@ public class GameWindowScene extends Scene {
 		super(new StackPane(), width, height);
 		
 		root = (StackPane) super.getRoot();
+		player = new Player(100, 125, "Placeholder");
 		
-		Region region = new Region(500, 500);
+		Region region = new Region(500, 500, player);
 		root.getChildren().add(region);
 		
-		player = new Player(100, 125, "Placeholder");
 		actors = new ArrayList<Actor>();
 		NonPlayerCharacter npc = new NonPlayerCharacter(100, 100);
 		actors.add(npc);
