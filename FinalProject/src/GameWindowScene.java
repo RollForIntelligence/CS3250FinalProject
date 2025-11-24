@@ -20,6 +20,8 @@ public class GameWindowScene extends Scene {
 	public GameWindowScene(int width, int height) {
 		super(new StackPane(), width, height);
 		
+		
+		
 		root = (StackPane) super.getRoot();
 		player = new Player(100, 125, "Placeholder");
 		
@@ -53,6 +55,9 @@ public class GameWindowScene extends Scene {
 		actorPane.setUIPane(uiPane);
 		
 		SetUpControls();
+		root.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
+			region.resize(this.getWidth(), this.getHeight());
+		});
 	}
 	
 	private void SetUpControls() {

@@ -29,14 +29,18 @@ public class ActorMovementPane extends Pane {
 		this.actors = actors;
 		
 		this.getChildren().add(this.player);
-		this.player.setLayoutX(200 + this.player.getxPos());
-		this.player.setLayoutY(200 + this.player.getyPos());
+		this.player.setLayoutX(width / 2 - this.player.getWidth() / 2);
+		this.player.setLayoutY(height / 2 - this.player.getHeight() / 2);
 		
 		for (Actor actor : actors) {
 			this.getChildren().add(actor);
 		}
 
 		startAnimation();
+	}
+	
+	public void resize(double width, double height) {
+		// TODO: implement resizability here
 	}
 	
 	public void setUIPane(UIPane pane) {
@@ -52,11 +56,7 @@ public class ActorMovementPane extends Pane {
 	}
 	
 	public void BounceBack() {
-		player.setxPos(player.getxPos() - (25 * xMovement));
-		player.setyPos(player.getyPos() - (25 * yMovement));
-		
-		player.setLayoutX(200 + player.getxPos());
-		player.setLayoutY(200 + player.getyPos());
+		player.move((-25 * xMovement), (-25 * yMovement));
 	}
 	
 	public void Kill(Actor actor) {
@@ -85,9 +85,13 @@ public class ActorMovementPane extends Pane {
 			public void handle(long now) {
 				if (now - lastUpdate >= DELAY) {
 					player.move(xMovement, yMovement);
+					if (player.getxPos() < 200 || player.getxPos() > 2300 || player.getyPos() < 200 || player.getyPos() > 2300) {
+						player.unmove(xMovement, yMovement);
+						System.out.println("not moving");
+					}
 					
-					player.setLayoutX(200 + player.getxPos());
-					player.setLayoutY(200 + player.getyPos());
+//					player.setLayoutX(200 + player.getxPos());
+//					player.setLayoutY(200 + player.getyPos());
 					
 					player.DrawCharacter(frame);
 					for (Actor actor : actors) {

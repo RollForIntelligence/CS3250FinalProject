@@ -17,6 +17,8 @@ public class Player extends Actor {
 		this.name = name;
 		this.inventory = new Inventory();
 		this.currentHealth = maxHealth;
+		super.setxPos(1000);
+		super.setyPos(1000);
 	}
 
 	public double getxPos() {
@@ -30,6 +32,13 @@ public class Player extends Actor {
 	public void move(double xMovement, double yMovement) {
 		super.setxPos(super.getxPos() + xMovement);
 		super.setyPos(super.getyPos() + yMovement);
+		
+		System.out.println(super.getyPos());
+	}
+	
+	public void unmove(double xMovement, double yMovement) {
+		super.setxPos(super.getxPos() - xMovement);
+		super.setyPos(super.getyPos() - yMovement);
 	}
 
 	public int getMaxHealth() {
