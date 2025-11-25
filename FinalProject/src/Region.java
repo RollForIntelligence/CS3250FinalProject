@@ -34,13 +34,13 @@ public class Region extends Canvas {
 	private void render() {
 		GraphicsContext gc = this.getGraphicsContext2D();
 		
-		// TODO: uncomment this when I have a background image
+		// : uncomment this when I have a background image
 		gc.save();
     	gc.translate(this.getWidth() / 2, this.getHeight() / 2);
     	gc.translate(-player.getxPos(), -player.getyPos());
     	
     	gc.setImageSmoothing(false);
-    	gc.drawImage(backgroundImage, 0, 0, 2500, 2500); // TODO: change this size to the size of the background image
+    	gc.drawImage(backgroundImage, 0, 0, 2500, 2500); // : change this size to the size of the background image
     	gc.restore();
 	}
 	

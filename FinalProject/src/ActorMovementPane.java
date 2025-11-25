@@ -19,6 +19,7 @@ public class ActorMovementPane extends Pane {
 	private ArrayList<Actor> actors;
 	
 	private UIPane uiPane;
+	private Region region;
 	
 	private AnimationTimer timer;
 	
@@ -29,8 +30,8 @@ public class ActorMovementPane extends Pane {
 		this.actors = actors;
 		
 		this.getChildren().add(this.player);
-		this.player.setLayoutX(width / 2 - this.player.getWidth() / 2);
-		this.player.setLayoutY(height / 2 - this.player.getHeight() / 2);
+		this.player.setLayoutX((width / 2) - (this.player.getWidth() / 2));
+		this.player.setLayoutY((height / 2) - (this.player.getHeight() / 2));
 		
 		for (Actor actor : actors) {
 			this.getChildren().add(actor);
@@ -40,7 +41,14 @@ public class ActorMovementPane extends Pane {
 	}
 	
 	public void resize(double width, double height) {
-		// TODO: implement resizability here
+		this.setWidth(width);
+		this.setHeight(height);
+		this.player.setLayoutX((width / 2) - (this.player.getWidth() / 2));
+		this.player.setLayoutY((height / 2) - (this.player.getHeight() / 2));
+	}
+	
+	public void setRegion(Region region) {
+		this.region = region;
 	}
 	
 	public void setUIPane(UIPane pane) {
@@ -64,11 +72,6 @@ public class ActorMovementPane extends Pane {
 		getChildren().remove(actor);
 	}
 	
-	private double GetDistance(double x1, double y1, double x2, double y2) {
-		double distance = Math.hypot(x1 - x2, y1 - y2);
-		return distance;
-	}
-	
 	private void startAnimation() {
 //		GraphicsContext gc = this.getGraphicsContext2D();
 		
@@ -84,24 +87,15 @@ public class ActorMovementPane extends Pane {
 			@Override
 			public void handle(long now) {
 				if (now - lastUpdate >= DELAY) {
-					player.move(xMovement, yMovement);
-					if (player.getxPos() < 200 || player.getxPos() > 2300 || player.getyPos() < 200 || player.getyPos() > 2300) {
-						player.unmove(xMovement, yMovement);
-						System.out.println("not moving");
-					}
-					
-//					player.setLayoutX(200 + player.getxPos());
-//					player.setLayoutY(200 + player.getyPos());
-					
+					movePlayer();
 					player.DrawCharacter(frame);
-					for (Actor actor : actors) {
-						actor.DrawCharacter();
-					}
+					
+					showOtherActors();
 					
 					for (Actor actor : actors) {
 						if (actor instanceof EnemyCharacter) {
 							EnemyCharacter enemy = (EnemyCharacter) actor;
-							if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 50) {
+							if (enemy.getBoundsInParent().intersects(player.getBoundsInParent())) {
 								if (player.TakeDamage(enemy.GetDamageDealt())) {
 									uiPane.GameOver();
 									this.stop();
@@ -127,5 +121,22 @@ public class ActorMovementPane extends Pane {
 		};
 		
 		timer.start();
+	}
+	
+	private void movePlayer() {
+		player.move(xMovement, yMovement);
+		if (player.getxPos() < 200 || player.getxPos() > 2300 || player.getyPos() < 200 || player.getyPos() > 2300) {
+			player.unmove(xMovement, yMovement);
+			System.out.println("not moving");
+		}
+		region.move();
+	}
+	
+	private void showOtherActors() {
+		for (Actor actor : actors) {
+			actor.setLayoutX(Actor.GetXDistance(player, actor) + player.getLayoutX());
+			actor.setLayoutY(Actor.GetYDistance(player, actor) + player.getLayoutY());
+			actor.DrawCharacter();
+		}
 	}
 }

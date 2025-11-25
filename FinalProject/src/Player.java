@@ -32,8 +32,6 @@ public class Player extends Actor {
 	public void move(double xMovement, double yMovement) {
 		super.setxPos(super.getxPos() + xMovement);
 		super.setyPos(super.getyPos() + yMovement);
-		
-		System.out.println(super.getyPos());
 	}
 	
 	public void unmove(double xMovement, double yMovement) {

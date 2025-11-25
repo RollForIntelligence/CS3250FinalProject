@@ -31,17 +31,14 @@ public class GameWindowScene extends Scene {
 		actors = new ArrayList<Actor>();
 		NonPlayerCharacter npc = new NonPlayerCharacter(100, 100);
 		actors.add(npc);
-		npc.setLayoutX(300);
-		npc.setxPos(100);
-		npc.setLayoutY(200);
-		npc.setyPos(0);
+		npc.setxPos(1100);
+		npc.setyPos(1000);
 		
 		EnemyCharacter enemy = new EnemyCharacter(50, 100);
 		actors.add(enemy);
-		enemy.setLayoutX(100);
-		enemy.setxPos(-100);
-		enemy.setLayoutY(200);
-		enemy.setyPos(0);
+		enemy.setxPos(900);
+		enemy.setyPos(900);
+		System.out.println(Actor.GetXDistance(player, enemy));
 		
 		actorPane = new ActorMovementPane(500, 500, player, actors);
 		root.getChildren().add(actorPane);
@@ -53,6 +50,7 @@ public class GameWindowScene extends Scene {
 		root.getChildren().add(uiPane);
 		
 		actorPane.setUIPane(uiPane);
+		actorPane.setRegion(region);
 		
 		SetUpControls();
 		root.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
@@ -70,7 +68,7 @@ public class GameWindowScene extends Scene {
 						if (uiActive) {
 							// Do not open a dialogueBox if the UI is already active
 						}
-						else if (GetDistance(player.getxPos(), player.getyPos(), character.getxPos(), character.getyPos()) < 100) {
+						else if (Actor.GetDistance(player, character) < 100) {
 							uiPane.OpenDialogue(character.GetDialogue(0));
 							ActivateUI();
 						}
@@ -84,7 +82,7 @@ public class GameWindowScene extends Scene {
 				else if (actor instanceof EnemyCharacter) {
 					EnemyCharacter enemy = (EnemyCharacter) actor; 
 					if (enemy.getBoundsInParent().intersects(event.getX(), event.getY(), 1, 1)) {
-						if (GetDistance(player.getxPos(), player.getyPos(), enemy.getxPos(), enemy.getyPos()) < 100) {
+						if (Actor.GetDistance(player, enemy) < player.getRange()) {
 							if (enemy.TakeDamage(player.getDamage())) { 
 								actorPane.Kill(enemy);
 								break;
@@ -131,7 +129,7 @@ public class GameWindowScene extends Scene {
 					for (Actor actor : actors) {
 						if (actor instanceof NonPlayerCharacter) {
 							NonPlayerCharacter character = (NonPlayerCharacter) actor;
-							if (GetDistance(player.getxPos(), player.getyPos(), character.getxPos(), character.getyPos()) < 100) {
+							if (Actor.GetDistance(player, character) < 100) {
 								uiPane.OpenDialogue(character.GetDialogue(0));
 								ActivateUI();
 								break;
@@ -139,7 +137,7 @@ public class GameWindowScene extends Scene {
 						}
 						else if (actor instanceof EnemyCharacter) {
 							EnemyCharacter enemy = (EnemyCharacter) actor; 
-							if (player.getBoundsInParent().intersects(enemy.getBoundsInParent())) {
+							if (Actor.GetDistance(player, enemy) < player.getRange()) {
 								if (enemy.TakeDamage(player.getDamage())) { 
 									actorPane.Kill(enemy);
 									break;
@@ -187,10 +185,5 @@ public class GameWindowScene extends Scene {
 		uiActive = true;
 		actorPane.setXMovement(0);
 		actorPane.setYMovement(0);
-	}
-	
-	private double GetDistance(double x1, double y1, double x2, double y2) {
-		double distance = Math.hypot(x1 - x2, y1 - y2);
-		return distance;
 	}
 }

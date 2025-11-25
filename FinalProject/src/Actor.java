@@ -36,4 +36,17 @@ public class Actor extends Canvas {
 	public void DrawCharacter() {
 		
 	}
+	
+	public static double GetDistance(Actor to, Actor from) {
+		double distance = Math.hypot(from.xPos - to.xPos, from.yPos - to.yPos);
+		return distance;
+	}
+	
+	public static double GetXDistance(Actor to, Actor from) {
+		return from.xPos - to.xPos;
+	}
+	
+	public static double GetYDistance(Actor to, Actor from) {
+		return from.yPos - to.yPos;
+	}
 }
