@@ -15,6 +15,8 @@ public class PlayerHealthBar extends Canvas {
 		DisplayHealth();
 	}
 	
+	// TODO: Implement playerHealthBar.resize
+	
 	public void DisplayHealth() {
 		gc.clearRect(0, 0, getWidth(), getHeight());
 		

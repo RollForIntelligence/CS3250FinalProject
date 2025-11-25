@@ -25,7 +25,7 @@ public class DialogueBox extends StackPane {
 		getChildren().add(dialogueBoxBackground);
 		
 		// Will only grow when open, won't shrink
-		// TODO: Tweak settings to allow the DialogueBox to shrink when open
+		// TODO: replace with DialogueBox.resize
 		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> { 
 			dialogueBoxBackground.setWidth(DialogueBox.this.getWidth());
 			dialogueBoxBackground.setHeight(DialogueBox.this.getHeight());

@@ -38,7 +38,6 @@ public class GameWindowScene extends Scene {
 		actors.add(enemy);
 		enemy.setxPos(900);
 		enemy.setyPos(900);
-		System.out.println(Actor.GetXDistance(player, enemy));
 		
 		actorPane = new ActorMovementPane(500, 500, player, actors);
 		root.getChildren().add(actorPane);
@@ -55,6 +54,8 @@ public class GameWindowScene extends Scene {
 		SetUpControls();
 		root.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
 			region.resize(this.getWidth(), this.getHeight());
+			actorPane.resize(this.getWidth(), this.getHeight());
+			// TODO: add UIPane.resize
 		});
 	}
 	
@@ -152,16 +153,16 @@ public class GameWindowScene extends Scene {
 				// Prevents movement if the UI is active
 			}
 			else if (event.getCode() == KeyCode.D) {
-				actorPane.setXMovement(1);
+				actorPane.setXMovement(player.PLAYER_SPEED);
 			}
 			else if (event.getCode() == KeyCode.A) {
-				actorPane.setXMovement(-1);
+				actorPane.setXMovement(-player.PLAYER_SPEED);
 			}
 			else if (event.getCode() == KeyCode.W) {
-				actorPane.setYMovement(-1);
+				actorPane.setYMovement(-player.PLAYER_SPEED);
 			}
 			else if (event.getCode() == KeyCode.S) {
-				actorPane.setYMovement(1);
+				actorPane.setYMovement(player.PLAYER_SPEED);
 			}
 		});
 		

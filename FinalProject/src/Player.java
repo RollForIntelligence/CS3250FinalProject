@@ -11,6 +11,7 @@ public class Player extends Actor {
 	private Inventory inventory;
 	private int maxHealth = 20;
 	private int currentHealth;
+	public final int PLAYER_SPEED = 5;
 	
 	public Player(int width, int height, String name) {
 		super(width < 100 ? 100 : width, height < 125 ? 125 : 125);

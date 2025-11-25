@@ -64,7 +64,7 @@ public class ActorMovementPane extends Pane {
 	}
 	
 	public void BounceBack() {
-		player.move((-25 * xMovement), (-25 * yMovement));
+		player.move((-25 * xMovement / player.PLAYER_SPEED), (-25 * yMovement / player.PLAYER_SPEED));
 	}
 	
 	public void Kill(Actor actor) {
