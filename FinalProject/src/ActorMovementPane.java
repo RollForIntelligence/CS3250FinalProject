@@ -142,7 +142,6 @@ public class ActorMovementPane extends Pane {
 		player.move(xMovement, yMovement);
 		if (player.getxPos() < 200 || player.getxPos() > 2300 || player.getyPos() < 200 || player.getyPos() > 2300) {
 			player.unmove(xMovement, yMovement);
-			System.out.println("not moving");
 		}
 		region.move();
 	}

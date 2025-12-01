@@ -82,7 +82,6 @@ public class UIDisplayPane extends StackPane {
 						ItemTile movingTile = (ItemTile) movementPane.getChildren().get(0);
 						ItemTile tileSelected = (ItemTile) tile;
 						inventory.swapItems(movingTile.getIndex(), tileSelected.getIndex());
-						System.out.println(movingTile.getIndex() + "->" + tileSelected.getIndex());
 						renderInventory(inventory, width, height);
 						break;
 					}
