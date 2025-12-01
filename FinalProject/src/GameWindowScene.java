@@ -53,9 +53,9 @@ public class GameWindowScene extends Scene {
 		
 		SetUpControls();
 		root.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
-			region.resize(this.getWidth(), this.getHeight());
-			actorPane.resize(this.getWidth(), this.getHeight());
-			// TODO: add UIPane.resize
+			region.resizeScreen(this.getWidth(), this.getHeight());
+			actorPane.resizeScreen(this.getWidth(), this.getHeight());
+			uiPane.resizeScreen(this.getWidth(), this.getHeight());
 		});
 	}
 	

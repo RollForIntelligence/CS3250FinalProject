@@ -7,18 +7,34 @@ public class PlayerHealthBar extends Canvas {
 	Player player;
 	GraphicsContext gc;
 	
+	double width;
+	
 	public PlayerHealthBar(int width, int height, Player player) {
 		// Makes the width of the player's health bar as small as possible in order to improve resizability
 		super(width > (40 * player.getMaxHealth() / 4) + 40 ? (40 * player.getMaxHealth() / 4) + 40 : width, height); 
 		this.player = player;
+		this.width = this.getWidth();
 		gc = this.getGraphicsContext2D();
 		DisplayHealth();
 	}
 	
-	// TODO: Implement playerHealthBar.resize
+	// Implement playerHealthBar.resize
+	public void resizeScreen(double width, double height) {
+		this.width = width;
+		this.setWidth(width);
+		this.setHeight(50);
+		DisplayHealth();
+	}
 	
 	public void DisplayHealth() {
 		gc.clearRect(0, 0, getWidth(), getHeight());
+		
+		if (width < 40 * (player.getMaxHealth() / 4) + 40) {
+			gc.clearRect(0, 0, getWidth(), getHeight());
+			gc.setStroke(Color.BLACK);
+			gc.strokeText(player.getCurrentHealth() + "/" + player.getMaxHealth(), 25, 25);
+			return;
+		}
 		
 		gc.setFill(Color.BLACK);
 		// This segment of the program creates the empty hearts

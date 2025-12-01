@@ -25,7 +25,7 @@ public class Region extends Canvas {
 		render();
 	}
 	
-	public void resize(double width, double height) {
+	public void resizeScreen(double width, double height) {
 		this.setWidth(width);
 		this.setHeight(height);
 		render();

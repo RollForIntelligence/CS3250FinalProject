@@ -15,20 +15,17 @@ public class DialogueBox extends StackPane {
 	private int displaySpeed = 3;
 	
 	private Label dialogueLabel;
+	private Canvas dialogueBoxBackground;
 	
 	public DialogueBox(String dialogueText, double width, double height) {
-		Canvas dialogueBoxBackground = new Canvas(width, height);
+		dialogueBoxBackground = new Canvas(width, height);
 		
 		GraphicsContext dbbgc = dialogueBoxBackground.getGraphicsContext2D();
 		drawBackground(dbbgc);
 		
 		getChildren().add(dialogueBoxBackground);
 		
-		// Will only grow when open, won't shrink
-		// TODO: replace with DialogueBox.resize
 		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> { 
-			dialogueBoxBackground.setWidth(DialogueBox.this.getWidth());
-			dialogueBoxBackground.setHeight(DialogueBox.this.getHeight());
 			drawBackground(dbbgc);
 		});
 		
@@ -41,9 +38,16 @@ public class DialogueBox extends StackPane {
 		dialogueLabel.setAlignment(Pos.CENTER);
 		dialogueLabel.setMaxWidth(width - 60);
 		
-		dialogueLabel.setStyle("-fx-font-family: serif; ");
+		dialogueLabel.setStyle("-fx-font-family: serif; "
+				+ "-fx-padding: 0 20 0 30;");
 		
 		getChildren().add(dialogueLabel);
+	}
+	
+	public void resizeScreen(double width, double height) {
+		dialogueBoxBackground.setWidth(width);
+		dialogueBoxBackground.setHeight(100);
+		drawBackground(dialogueBoxBackground.getGraphicsContext2D());
 	}
 	
 	private void drawBackground(GraphicsContext gc) {

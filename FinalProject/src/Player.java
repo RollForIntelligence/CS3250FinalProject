@@ -108,20 +108,41 @@ public class Player extends Actor {
 		
 		// hair
 		gc.setFill(Color.BROWN);
-		gc.fillArc(39, 8, 20, 20, 45, 135, ArcType.CHORD);
+		gc.setStroke(Color.BROWN);
+		gc.setLineWidth(2);
+		if (frame / 4 == 0) {
+			gc.fillArc(39, 8, 20, 20, 45, 135, ArcType.CHORD);
+		}
+		else if (frame / 4 == 1) {
+			gc.fillArc(41, 8, 20, 20, 0, 135, ArcType.CHORD);
+		}
+		else if (frame / 4 == 2) {
+			gc.fillArc(39, 8, 22, 22, 315, 270, ArcType.CHORD);
+		}
+		else if (frame / 4 == 3) {
+			gc.strokeArc(39, 9, 22, 22, 45, 90, ArcType.OPEN);
+		}
 	
 		// Left arm
 		gc.setStroke(Color.TAN);
 		gc.setLineCap(StrokeLineCap.ROUND);
 		gc.setLineWidth(10);
-		if (frame == 1 || frame == 3) {
+		if (frame == 1 || frame == 3 || frame == 5 || frame == 7) {
 			gc.strokeLine(50, 40, 50, 70);
 		}
-		else if (frame == 0) {
+		else if (frame == 0 || frame == 6) {
 			gc.strokeLine(50, 40, 68, 64);
 		}
-		else if (frame == 2) {
+		else if (frame == 2 || frame == 4) {
 			gc.strokeLine(50, 40, 32, 64);
+		}
+		else if (frame == 9 || frame == 11) {
+			gc.strokeLine(35, 40, 35, 70);
+			gc.strokeLine(65, 40, 65, 70);
+		}
+		else if (frame == 8 || frame == 10) {
+			gc.strokeLine(35, 40, 35, 64);
+			gc.strokeLine(65, 40, 65, 64);
 		}
 		
 		// Torso
@@ -138,62 +159,86 @@ public class Player extends Actor {
 		// Left leg and Shoe
 		gc.setStroke(Color.DARKBLUE);
 		gc.setFill(Color.BLACK);
-		if (frame == 0) {
+		if (frame == 0 || frame == 6) {
 			gc.strokeLine(50, 75, 74, 107);
-			gc.fillPolygon(new double[] {77.5, 70.5, 76, 88}
-			, new double[] {105, 110, 118, 108}, 4);
+			gc.fillOval(72, 107, 10, 10);
 		}
-		else if (frame == 1) {
+		else if (frame == 1 || frame == 7) {
 			gc.strokeLine(50, 75, 50, 115);
-			gc.fillPolygon(new double[] {45, 45, 60, 55}
-			, new double[] {110, 120, 120, 110}, 4);
+			gc.fillOval(45, 115, 10, 10);
 		}
-		else if (frame == 2) {
+		else if (frame == 2 || frame == 4) {
 			gc.strokeLine(50, 75, 26, 107);
-			gc.fillPolygon(new double[] {29.5, 21, 15, 30}
-			, new double[] {110, 105, 114, 120}, 4);
+			gc.fillOval(18, 107, 10, 10);
 		}
-		else if (frame == 3) {
+		else if (frame == 3 || frame == 5) {
 			gc.strokeLine(50, 75, 50, 115);
-			gc.fillPolygon(new double[] {45, 45, 60, 55}
-			, new double[] {110, 120, 120, 110}, 4);
+			gc.fillOval(45, 115, 10, 10);
+		}
+		else if (frame == 9 || frame == 11 || frame == 13 || frame == 15) {
+			gc.strokeLine(44, 75, 44, 115);
+			gc.fillOval(39, 115, 10, 10);
+		}
+		else if (frame == 8 || frame == 14) {
+			gc.strokeLine(44, 75, 44, 107);
+			gc.fillOval(40, 107, 8, 8);
+		}
+		else if (frame == 10 || frame == 12) {
+			gc.strokeLine(44, 75, 44, 107);
+			gc.fillOval(38, 107, 12, 12);
 		}
 		
 		// Right leg and Shoe
 		gc.setStroke(Color.DARKBLUE);
-		if (frame == 0) {
+		if (frame == 0 || frame == 6) {
 			gc.strokeLine(50, 75, 26, 107);
-			gc.fillPolygon(new double[] {29.5, 21, 15, 30}
-			, new double[] {110, 105, 114, 120}, 4);
+			gc.fillOval(18, 107, 10, 10);
 		}
-		else if (frame == 1) {
+		else if (frame == 1 || frame == 7) {
 			gc.strokeLine(50, 75, 50, 115);
-			gc.fillPolygon(new double[] {45, 45, 60, 55}
-			, new double[] {110, 120, 120, 110}, 4);
+			gc.fillOval(45, 115, 10, 10);
 		}
-		else if (frame == 2) {
+		else if (frame == 2 || frame == 4) {
 			gc.strokeLine(50, 75, 74, 107);
-			gc.fillPolygon(new double[] {77.5, 70.5, 76, 88}
-			, new double[] {105, 110, 118, 108}, 4);
+			gc.fillOval(72, 107, 10, 10);
 		}
-		else if (frame == 3) {
+		else if (frame == 3 || frame == 5) {
 			gc.strokeLine(50, 75, 50, 115);
-			gc.fillPolygon(new double[] {45, 45, 60, 55}
-			, new double[] {110, 120, 120, 110}, 4);
+			gc.fillOval(45, 115, 10, 10);
+		}
+		else if (frame == 9 || frame == 11 || frame == 13 || frame == 15) {
+			gc.strokeLine(56, 75, 56, 115);
+			gc.fillOval(51, 115, 10, 10);
+		}
+		else if (frame == 10 || frame == 12) {
+			gc.strokeLine(56, 75, 56, 107);
+			gc.fillOval(52, 107, 8, 8);
+		}
+		else if (frame == 8 || frame == 14) {
+			gc.strokeLine(56, 75, 56, 107);
+			gc.fillOval(50, 107, 12, 12);
 		}
 		
 		// Right arm
 		gc.setStroke(Color.TAN);
 		gc.setLineCap(StrokeLineCap.ROUND);
 		gc.setLineWidth(10);
-		if (frame == 1 || frame == 3) {
+		if (frame == 1 || frame == 3 || frame == 5 || frame == 7) {
 			gc.strokeLine(50, 40, 50, 70);
 		}
-		else if (frame == 0) {
+		else if (frame == 0 || frame == 6) {
 			gc.strokeLine(50, 40, 32, 64);
 		}
-		else if (frame == 2) {
+		else if (frame == 2 || frame == 4) {
 			gc.strokeLine(50, 40, 68, 64);
+		}
+		else if (frame == 13 || frame == 15) {
+			gc.strokeLine(35, 40, 35, 70);
+			gc.strokeLine(65, 40, 65, 70);
+		}
+		else if (frame == 12 || frame == 14) {
+			gc.strokeLine(35, 40, 35, 64);
+			gc.strokeLine(65, 40, 65, 64);
 		}
 	}
 }

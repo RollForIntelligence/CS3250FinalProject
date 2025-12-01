@@ -18,16 +18,18 @@ public class UIDisplayPane extends StackPane {
 		
 	private Pane movementPane;
 	private GridPane inventoryGrid;
+	private Inventory inventory;
 	
 	public UIDisplayPane(Inventory inventory, double width, double height) {
 		// : set up a GridPane of tiles for the items
 		inventoryGrid = new GridPane();
+		this.inventory = inventory;
 		
 		// Ensures the tiles are squares that fit within the bounds of the screen
 		double tileSize = Math.min((width >= 400 ? 80 : width / 5), (height >= 320 ? 80 : height / 4));
 		
-		for (int i = 0; i < inventory.MAX_CAPACITY; i++) {
-			ItemTile tile = new ItemTile(tileSize, inventory.getItemAt(i), i);
+		for (int i = 0; i < this.inventory.MAX_CAPACITY; i++) {
+			ItemTile tile = new ItemTile(tileSize, this.inventory.getItemAt(i), i);
 			inventoryGrid.add(tile, i / 4, i % 4);
 		}
 		
@@ -40,10 +42,10 @@ public class UIDisplayPane extends StackPane {
 		movementPane = new Pane();
 		this.getChildren().add(movementPane);
 				
-		// TODO: allow the inventory to adjust when the window changes size
-		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> { 
-			renderInventory(inventory, UIDisplayPane.this.getWidth(), UIDisplayPane.this.getHeight());
-		});
+		
+//		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> { 
+//			renderInventory(inventory, UIDisplayPane.this.getWidth(), UIDisplayPane.this.getHeight());
+//		});
 		
 		// Allow the user to appear to move a copy of a tile around with their mouse
 		this.setOnMousePressed(event -> {
@@ -154,15 +156,29 @@ public class UIDisplayPane extends StackPane {
 		}
 	}
 	
+	private Canvas gameOverCanvas = null;
+	
 	public UIDisplayPane(String message, double width, double height) {
-		Canvas gameOverCanvas = new Canvas();
+		gameOverCanvas = new Canvas();
+		inventoryGrid = null;
 		formatGameOverCanvas(gameOverCanvas, message, width, height);
 		
+		this.getChildren().clear();
 		this.getChildren().add(gameOverCanvas);
 		
 		this.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
 			formatGameOverCanvas(gameOverCanvas, message, UIDisplayPane.this.getWidth(), UIDisplayPane.this.getHeight());
 		});
+	}
+	
+	public void resizeScreen(double width, double height) {
+		if (inventoryGrid != null) {
+			// TODO: allow the inventory to adjust when the window changes size
+			renderInventory(inventory, width, height);
+		}
+		if (gameOverCanvas != null) {
+			formatGameOverCanvas(gameOverCanvas, "Game Over", UIDisplayPane.this.getWidth(), UIDisplayPane.this.getHeight());
+		}
 	}
 	
 	private void formatGameOverCanvas(Canvas canvas, String message, double width, double height) {

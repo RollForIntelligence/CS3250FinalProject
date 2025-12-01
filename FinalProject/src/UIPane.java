@@ -15,7 +15,13 @@ public class UIPane extends BorderPane {
 		setTop(playerHealthBar);
 	}
 	
-	// TODO: Implement UIPane.resize to use PlayerHealthBar.resize and DialogueBox.resize
+	// Implement UIPane.resize to use PlayerHealthBar.resize and DialogueBox.resize
+	public void resizeScreen(double width, double height) {
+		playerHealthBar.resizeScreen(width, height);
+		if (dialogueBox != null) {
+			dialogueBox.resizeScreen(width, height);
+		};
+	}
 	
 	public void OpenDialogue(String dialogueText) {
 		if (this.getBottom() instanceof DialogueBox) {

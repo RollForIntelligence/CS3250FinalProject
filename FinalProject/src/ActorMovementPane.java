@@ -23,6 +23,8 @@ public class ActorMovementPane extends Pane {
 	
 	private AnimationTimer timer;
 	
+	private int frameOffset = 0;
+	
 	public ActorMovementPane(int width, int height, Player playerCharacter, ArrayList<Actor> actors) {
 		//super(width, height);
 		this.player = playerCharacter;
@@ -40,7 +42,7 @@ public class ActorMovementPane extends Pane {
 		startAnimation();
 	}
 	
-	public void resize(double width, double height) {
+	public void resizeScreen(double width, double height) {
 		this.setWidth(width);
 		this.setHeight(height);
 		this.player.setLayoutX((width / 2) - (this.player.getWidth() / 2));
@@ -88,7 +90,20 @@ public class ActorMovementPane extends Pane {
 			public void handle(long now) {
 				if (now - lastUpdate >= DELAY) {
 					movePlayer();
-					player.DrawCharacter(frame);
+					if (xMovement > 0) {
+						frameOffset = 0;
+					}
+					else if (xMovement < 0) {
+						frameOffset = 4;
+					}
+					else if (yMovement > 0) {
+						frameOffset = 12;
+					}
+					else if (yMovement < 0) {
+						frameOffset = 8;
+					}
+					int currentFrame = frame + frameOffset;
+					player.DrawCharacter(currentFrame);
 					
 					showOtherActors();
 					
