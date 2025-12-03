@@ -88,9 +88,9 @@ public class Inventory {
 		
 		// Add the new item to the first empty slot if it hasn't been placed yet
 		if (!successful) {
-			for (Item item : items) {
-				if (item == null) {
-					item = addedItem;
+			for (int i = 0; i < MAX_CAPACITY; i++) {
+				if (this.getItemAt(i) == null) {
+					items[i] = addedItem;
 					successful = true;
 					break;
 				}

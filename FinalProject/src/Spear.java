@@ -1,3 +1,6 @@
+import java.io.InputStream;
+
+import javafx.scene.image.Image;
 
 public class Spear extends Weapon {
 	public Spear(String name, int damageValue) {
@@ -5,6 +8,7 @@ public class Spear extends Weapon {
 		this.quantity = 1;
 		this.damageValue = damageValue;
 		this.range = 150;
-//		this.sprite = // TODO: place sprite here
+		InputStream inputStream = getClass().getResourceAsStream("images/ConvertedSpear.png");
+		this.sprite = new Image(inputStream);
 	}
 }

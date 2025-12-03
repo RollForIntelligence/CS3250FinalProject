@@ -30,7 +30,7 @@ public class UIDisplayPane extends StackPane {
 		
 		for (int i = 0; i < this.inventory.MAX_CAPACITY; i++) {
 			ItemTile tile = new ItemTile(tileSize, this.inventory.getItemAt(i), i);
-			inventoryGrid.add(tile, i / 4, i % 4);
+			inventoryGrid.add(tile, i % 5, i / 5);
 		}
 		
 		this.width = tileSize * 5;
@@ -104,7 +104,7 @@ public class UIDisplayPane extends StackPane {
 		
 		for (int i = 0; i < inventory.MAX_CAPACITY; i++) {
 			ItemTile tile = new ItemTile(tileSize, inventory.getItemAt(i), i);
-			inventoryGrid.add(tile, i / 4, i % 4);
+			inventoryGrid.add(tile, i % 5, i / 5);
 		}
 		
 		this.width = tileSize * 5;
@@ -142,7 +142,8 @@ public class UIDisplayPane extends StackPane {
 			gc.strokeRect(0, 0, this.getWidth(), this.getHeight());
 			
 			if (item != null) {
-				gc.drawImage(item.getSprite(), 5, 5, this.getWidth() - 5, this.getHeight() - 5);
+				gc.setImageSmoothing(false);
+				gc.drawImage(item.getSprite(), 2.5, 2.5, this.getWidth() - 5, this.getHeight() - 5);
 			}
 		}
 		
@@ -172,7 +173,6 @@ public class UIDisplayPane extends StackPane {
 	
 	public void resizeScreen(double width, double height) {
 		if (inventoryGrid != null) {
-			// TODO: allow the inventory to adjust when the window changes size
 			renderInventory(inventory, width, height);
 		}
 		if (gameOverCanvas != null) {

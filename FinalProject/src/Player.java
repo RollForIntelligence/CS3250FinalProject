@@ -20,6 +20,9 @@ public class Player extends Actor {
 		this.currentHealth = maxHealth;
 		super.setxPos(1000);
 		super.setyPos(1000);
+		
+		inventory.addItem(new Sword("Sword", 5));
+		inventory.addItem(new Spear("Spear", 3));
 	}
 
 	public double getxPos() {
