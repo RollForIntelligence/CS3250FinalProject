@@ -33,8 +33,10 @@ public class GameWindowScene extends Scene {
 		actors.add(npc);
 		npc.setxPos(1100);
 		npc.setyPos(1000);
+		npc.AddDialogue("If I have 15 oranges in one hand and 36 oranges in the other, I have far too many oranges than is reasonable.");
+		npc.AddDialogue("You're too far away, I can't hear you!");
 		
-		EnemyCharacter enemy = new EnemyCharacter(50, 100);
+		EnemyCharacter enemy = new EnemyCharacter(50, 100, 10, 3);
 		actors.add(enemy);
 		enemy.setxPos(900);
 		enemy.setyPos(900);
