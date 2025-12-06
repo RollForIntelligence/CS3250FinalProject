@@ -37,6 +37,11 @@ public class Actor extends Canvas {
 		
 	}
 	
+	public void move(double xMovement, double yMovement) {
+		xPos += xMovement;
+		yPos += yMovement;
+	}
+	
 	public static double GetDistance(Actor to, Actor from) {
 		double distance = Math.hypot(from.xPos - to.xPos, from.yPos - to.yPos);
 		return distance;

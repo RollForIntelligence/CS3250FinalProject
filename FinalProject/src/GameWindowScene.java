@@ -36,10 +36,34 @@ public class GameWindowScene extends Scene {
 		npc.AddDialogue("If I have 15 oranges in one hand and 36 oranges in the other, I have far too many oranges than is reasonable.");
 		npc.AddDialogue("You're too far away, I can't hear you!");
 		
+		NonPlayerCharacter swimmer = new NonPlayerCharacter(100, 100);
+		actors.add(swimmer);
+		swimmer.setxPos(1550);
+		swimmer.setyPos(1350);
+		swimmer.AddDialogue("Hello... I am under the water...");
+		swimmer.AddDialogue("Hey! Over Here!");
+		
+		NonPlayerCharacter mather = new NonPlayerCharacter(100, 100);
+		actors.add(mather);
+		mather.setxPos(2250);
+		mather.setyPos(400);
+		mather.AddDialogue("My X position is 2250 and my Y position is 400. You may find a swimmer at X = 1550 and Y = 1350. A criticizer of math problems may be found at X = 1100 and Y = 1000.");
+		mather.AddDialogue("...");
+		
 		EnemyCharacter enemy = new EnemyCharacter(50, 100, 10, 3);
 		actors.add(enemy);
 		enemy.setxPos(900);
 		enemy.setyPos(900);
+		
+		for (int i = 0; i < 30; i++) {
+			EnemyCharacter newEnemy = new EnemyCharacter(50, 100, (int)(Math.random() * 15) + 1, (int)(Math.random() * 5) + 1);
+			actors.add(newEnemy);
+			newEnemy.setxPos(200 + Math.random() * 2100);
+			newEnemy.setyPos(200 + Math.random() * 2100);
+			if (Actor.GetDistance(player, newEnemy) < 300) {
+				newEnemy.move(500, 500);
+			}
+		}
 		
 		actorPane = new ActorMovementPane(500, 500, player, actors);
 		root.getChildren().add(actorPane);

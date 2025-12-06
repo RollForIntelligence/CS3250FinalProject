@@ -1,6 +1,6 @@
 
 public class DialogueScrambler {
-	private static String cypher = "!@#$%^&*=+~5";
+	private static String cypher = "!@#$%^&*()~5";
 	
 	public static String Scramble(String input) {
 		String result = "";
